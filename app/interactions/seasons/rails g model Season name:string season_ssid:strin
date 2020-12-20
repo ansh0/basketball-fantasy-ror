@@ -1,0 +1,11 @@
+rails g model Season name:string season_ssid:string season_name:string group_count:integer round_count:integer sort_number:integer current_group:boolean group:boolean
+
+rails g model League color:string league_ssid:string league_name:string short_name:string league_type:integer match_season:string country_id:integer country:string league_kind:integer logo:string part_time:string
+
+rails g model Match match_ssid:string league_id:integer match_timestamp:string status:string home_name:string away_name:string home_score:integer away_score:integer explain_status:string neutral:boolean home_team_id:integer away_team_id:integer 
+
+rails g model Team name:string short_name:string logo:string website:string conference:string division:string city:string venue:string capacity:string join_year:integer champion_count:integer coach:string league_id:integer
+
+
+
+

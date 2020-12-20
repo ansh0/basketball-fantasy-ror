@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  match_ssid: MyString
+  league_id: 1
+  match_timestamp: MyString
+  status: MyString
+  home_name: MyString
+  away_name: MyString
+  home_score: 1
+  away_score: 1
+  explain_status: MyString
+  neutral: false
+  home_team_id: 1
+  away_team_id: 1
+
+two:
+  match_ssid: MyString
+  league_id: 1
+  match_timestamp: MyString
+  status: MyString
+  home_name: MyString
+  away_name: MyString
+  home_score: 1
+  away_score: 1
+  explain_status: MyString
+  neutral: false
+  home_team_id: 1
+  away_team_id: 1
