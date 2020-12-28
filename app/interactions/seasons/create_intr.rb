@@ -4,11 +4,15 @@
 class Seasons::CreateIntr < ApplicationInteraction
   def execute
     @seasons = get_seasons
-    Season.import columns, get_seasons_data(@seasons), validate: true
+    Season.import get_seasons_data(@seasons), on_duplicate_key_update: { conflict_target: selector, columns: setter }
   end
 
-  def columns
-  	[:season_ssid, :name, :league_id, :season_name, :group_count, :round_count, :sort_number, :current_group, :group]
+  def setter
+  	[:name, :season_name, :group_count, :round_count, :sort_number, :current_group, :group]
+  end
+
+  def selector
+    [:season_ssid, :league_id]
   end
 
   def get_seasons_data(seasons)

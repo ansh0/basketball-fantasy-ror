@@ -2,6 +2,10 @@
 
 # Responsible for creating offers
 class Teams::CreateIntr < ApplicationInteraction
+  string :league_ssid
+
+  validates :league_ssid, presence: true
+
   def execute
     @teams = get_teams
     Team.import columns, get_teams_data(@teams), validate: true
@@ -65,7 +69,7 @@ class Teams::CreateIntr < ApplicationInteraction
   end
 
   def get_teams
-    res = EsportBaseIntr.run(url_type: 'team')
+    res = EsportBaseIntr.run(url_type: 'team', leagueId: league_ssid)
     res.result["data"]
   end
 end

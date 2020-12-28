@@ -2,16 +2,17 @@
 
 # Responsible for creating offers
 class Players::CreateIntr < ApplicationInteraction
+  string :team_ssid
+
+  validates :team_ssid, presence: true
   def execute
     @players = get_players
-    Player.import columns, get_players_data(@players), validate: true
+    Player.import get_players_data(@players), on_duplicate_key_update: { conflict_target: selector, columns: setter }
   end
 
-  def columns
+  def setter
     [
-      :player_ssid,
       :name,
-      :team_id,
       :place,
       :birthday,
       :height_cm,
@@ -21,6 +22,10 @@ class Players::CreateIntr < ApplicationInteraction
       :salary,
       :number
     ]
+  end
+
+  def selector
+    [:player_ssid, :team_id]
   end
 
   def get_players_data(players)
@@ -59,7 +64,7 @@ class Players::CreateIntr < ApplicationInteraction
   end
 
   def get_players
-    res = EsportBaseIntr.run(url_type: 'player')
+    res = EsportBaseIntr.run(url_type: 'player', teamId: team_ssid)
     res.result["data"]
   end
 end

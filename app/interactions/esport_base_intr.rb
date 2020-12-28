@@ -12,7 +12,7 @@ class EsportBaseIntr < ApplicationInteraction
   end
 
   def getData
-    response = RestClient.get("#{BASE_URL}/#{url_type}", {params: data_params.merge({api_key: 'API-KEY'})})
+    response = RestClient.get("#{BASE_URL}/#{url_type}", {params: data_params.merge({api_key: 'fum02rqCNEgAXzX3'})})
     data = response.code == 200 ? response.body : response
     return data
   end

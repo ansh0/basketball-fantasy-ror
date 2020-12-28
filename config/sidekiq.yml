@@ -1,0 +1,39 @@
+---
+:concurrency: 5
+
+:timeout: 30
+
+:dynamic: true
+:enabled: true
+:scheduler:
+  :listened_queues_only: false
+
+:schedule:
+  cron_adjuster_worker:
+    cron:
+      - '*/30 * * * *' # Runs every 30 minutes
+      - first_in:
+          '3s'
+
+    # By default the job name will be taken as worker class name.
+    # If you want to have a different job name and class name, provide the 'class' option
+    class: Agents::Cron::CronSync
+    # queue: slow
+    args: {}
+    description: "CronAdjuster Worker"
+
+    # Enable the `metadata` argument which will pass a Hash containing the schedule metadata
+    # as the last argument of the `perform` method. `false` by default.
+    include_metadata: true
+
+    # Enable / disable a job. All jobs are enabled by default.
+    enabled: true
+
+staging:
+  :concurrency: 5
+production:
+  :concurrency: 5
+:queues:
+  - default
+  - mailers
+  - badges

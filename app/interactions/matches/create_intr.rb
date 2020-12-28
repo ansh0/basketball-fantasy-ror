@@ -2,17 +2,17 @@
 
 # Responsible for creating offers
 class Matches::CreateIntr < ApplicationInteraction
-  integer :league_id, presence: true
+  string :league_ssid
+
+  validates :league_ssid, presence: true
 
   def execute
     @matches = get_matches
-    Match.import columns, get_matches_data(@matches), validate: true
+    Match.import get_matches_data(@matches), on_duplicate_key_update: { conflict_target: selector, columns: setter }
   end
 
-  def columns
+  def setter
     [
-      :match_ssid,
-      :league_id,
       :match_timestamp,
       :status,
       :home_name,
@@ -24,6 +24,10 @@ class Matches::CreateIntr < ApplicationInteraction
       :home_team_id,
       :away_team_id
     ]
+  end
+
+  def selector
+    [:match_ssid, :league_id]
   end
 
   def get_matches_data(matches)
@@ -63,7 +67,7 @@ class Matches::CreateIntr < ApplicationInteraction
   end
 
   def get_matches
-    res = EsportBaseIntr.run(url_type: 'schedule/basic', data_params: {leagueId: league_id})
+    res = EsportBaseIntr.run(url_type: 'schedule/basic', data_params: {leagueId: league_ssid})
     res.result["data"]
   end
 end

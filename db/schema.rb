@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_20_105102) do
+ActiveRecord::Schema.define(version: 2020_12_27_063507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 2020_12_20_105102) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "match_stats", force: :cascade do |t|
+    t.integer "home_team_id"
+    t.integer "away_team_id"
+    t.integer "match_id"
+    t.integer "home_score"
+    t.integer "away_score"
+    t.integer "home_total_miss"
+    t.integer "away_total_miss"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "matches", force: :cascade do |t|
     t.string "match_ssid"
     t.integer "league_id"
@@ -44,6 +56,29 @@ ActiveRecord::Schema.define(version: 2020_12_20_105102) do
     t.boolean "neutral"
     t.integer "home_team_id"
     t.integer "away_team_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "player_stats", force: :cascade do |t|
+    t.integer "team_id"
+    t.integer "match_id"
+    t.integer "player_id"
+    t.string "location"
+    t.integer "play_time"
+    t.integer "shoot_hit"
+    t.integer "shooot"
+    t.integer "three_point_hit"
+    t.integer "three_point_shoot"
+    t.integer "penalty_shot_hit"
+    t.integer "penalty_shot"
+    t.integer "attack"
+    t.integer "foul"
+    t.integer "rob"
+    t.integer "miss"
+    t.integer "cover"
+    t.integer "score"
+    t.boolean "on_floor"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

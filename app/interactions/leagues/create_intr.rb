@@ -3,11 +3,15 @@
 # Responsible for creating offers
 class Leagues::CreateIntr < ApplicationInteraction
   def execute
-    League.import columns, get_leagues_data(get_leagues), validate: true
+    League.import get_leagues_data(get_leagues), on_duplicate_key_update: { conflict_target: selector, columns: setter }
   end
 
-  def columns
-    [:league_ssid, :color, :short_name, :league_name, :league_type, :match_season, :country_id, :country, :league_kind, :logo, :part_time]
+  def setter
+    [:color, :short_name, :league_name, :league_type, :match_season, :country_id, :country, :league_kind, :logo, :part_time]
+  end
+
+  def selector
+    [:league_ssid]
   end
 
   def get_leagues_data(leagues)
